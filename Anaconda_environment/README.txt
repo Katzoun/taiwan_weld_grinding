@@ -1,0 +1,3 @@
+Tensorflow.yaml: Conda env for training PointNet, includes Open3D and other libs. Kept for reference only -- the PointNet notebooks that used it have been removed from this repo.
+
+Pytorch.yaml   : Conda env for training PointCNN / running Weld_Recognition&Grinding_Path_Planning(PointCNN).ipynb. This file is empty (the original export was lost) -- use ../requirements.txt instead, verified working on Ubuntu 22.04 / Python 3.10.

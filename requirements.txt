@@ -1,0 +1,20 @@
+# Core stack for Point_Cloud_Preprocessing / Weld_Recognition&Grinding_Path_Planning(PointCNN)
+# and Eye-to-Hand_Calibration(SVD+ICP). Verified working on Ubuntu 22.04 / Python 3.10.
+numpy==2.2.6
+pandas==2.3.3
+scipy==1.15.3
+scikit-learn==1.7.2
+scikit-image==0.25.2
+opencv-python==5.0.0.93
+open3d==0.19.0
+matplotlib==3.10.9
+tqdm==4.70.0
+
+# Needed only to run the notebooks interactively (not for headless/batch use)
+jupyterlab==4.6.3
+notebook==7.6.2
+
+# PointCNN_Training.ipynb additionally needs torch + pytorch-lightning, and a
+# missing module (pointcnn_seg_1024.py) that is not present anywhere in this
+# repo -- training is currently broken independent of the environment. Not
+# included here; add torch/pytorch-lightning separately if that gets fixed.
