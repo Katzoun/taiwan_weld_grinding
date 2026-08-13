@@ -1,0 +1,5 @@
+2048_8  early stopping:112    train:0.9894    val:0.9872
+2048_16 early stopping:68    train:0.9843    val:0.9836
+1024_8  early stopping:92    train:0.9863    val:0.9855
+1024_16 early stopping:71    train:0.9795    val:0.9820
+

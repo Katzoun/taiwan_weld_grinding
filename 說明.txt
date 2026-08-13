@@ -1,0 +1,21 @@
+Point_Cloud_Preprocessing: 將深度相機掃描的點雲進行表面重建、重新採樣等前處理
+
+Weld_Recognition&Grinding_Path_Planning(PointNet or PointCNN): 使用PointNet or PointCNN進行焊道辨識與研磨路徑規劃(深度相機)
+ 
+Quaternion-Eular_Angle_Transform: 用於轉換旋轉矩陣or尤拉角與四元數
+
+Eye-to-Hand_Calibration(SVD+ICP): 使用基於點雲對齊的手眼校正方法來產生座標系變換矩陣
+
+Project_Laser_Scanner&RF: 使用體素過濾、K-means、隨機森林進行焊道辨識(雷射線掃描器)
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+PointNet_Training: PointNet的訓練程式，包含模型架構定義與訓練主程式，可直接使用此程式訓練
+
+PointCNN_Training: PointCNN的訓練主程式，不包含模型架構定義，需將資料夾PointCNN_Training_Functions中的函數Import才可進行訓練
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+ABB_Socket_Connection: 使用TCP/IP和乙太網路在PC上控制ABB機械手臂進行線性位移的通訊程式，需將ABB_6-Axis_Robot資料夾中的
+		       socket_conn_new檔案匯入機械手臂示教器中後搭配使用

@@ -1,0 +1,3 @@
+Tensorflow.yaml:訓練PointNet的環境並安裝有Open3D等lib，可運行Weld_Recognition&Grinding_Path_Planning(PointNet).ipynb
+
+Pytorch.yaml   :訓練PointCNN的環境並安裝有Open3D等lib，可運行Weld_Recognition&Grinding_Path_Planning(PointCNN).ipynb
