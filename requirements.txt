@@ -14,7 +14,26 @@ tqdm==4.70.0
 jupyterlab==4.6.3
 notebook==7.6.2
 
-# PointCNN_Training.ipynb additionally needs torch + pytorch-lightning, and a
-# missing module (pointcnn_seg_1024.py) that is not present anywhere in this
-# repo -- training is currently broken independent of the environment. Not
-# included here; add torch/pytorch-lightning separately if that gets fixed.
+# PointCNN inference/training stack. GTX 1060 (compute capability 6.1 / Pascal)
+# needs the cu121 build specifically -- the default PyPI torch wheel (cu130) has
+# dropped Pascal kernels entirely. torch_geometric must stay <=2.5.x: 2.6+ made
+# XConv require pyg-lib>=0.6.0, and no such pyg-lib build exists for torch 2.3.1.
+# Install with:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu121
+#   pip install torch_geometric==2.5.3 pytorch-lightning torchmetrics
+#   pip install torch_scatter torch_cluster pyg-lib -f https://data.pyg.org/whl/torch-2.3.1+cu121.html
+torch==2.3.1+cu121
+torch_geometric==2.5.3
+torch_scatter
+torch_cluster
+pyg-lib==0.4.0+pt23cu121
+pytorch-lightning==2.6.5
+torchmetrics==1.9.0
+
+# PointCNN_Training.ipynb also imports a module (pointcnn_seg_1024.py) that is
+# not present anywhere in this repo. In practice PointCNN_Training_Functions/model/
+# pointcnn_seg.py's PointCNNSeg class is architecturally identical (verified by
+# loading pointcnn-best_8_2048.ckpt with it -- state_dict matches exactly) and can
+# be used in its place for inference. It needed one fix for modern
+# pytorch_lightning: pytorch_lightning.utilities.types.EPOCH_OUTPUT was removed
+# and is only used there as a type hint.
