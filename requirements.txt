@@ -1,4 +1,4 @@
-# Core stack for Point_Cloud_Preprocessing / Weld_Recognition&Grinding_Path_Planning(PointCNN)
+# Core stack for Point_Cloud_Preprocessing / Weld_Recognition&Grinding_Path_Planning(PointNet)
 # and Eye-to-Hand_Calibration(SVD+ICP). Verified working on Ubuntu 22.04 / Python 3.10.
 numpy==2.2.6
 pandas==2.3.3
@@ -14,26 +14,20 @@ tqdm==4.70.0
 jupyterlab==4.6.3
 notebook==7.6.2
 
-# PointCNN inference/training stack. GTX 1060 (compute capability 6.1 / Pascal)
-# needs the cu121 build specifically -- the default PyPI torch wheel (cu130) has
-# dropped Pascal kernels entirely. torch_geometric must stay <=2.5.x: 2.6+ made
-# XConv require pyg-lib>=0.6.0, and no such pyg-lib build exists for torch 2.3.1.
-# Install with:
-#   pip install torch --index-url https://download.pytorch.org/whl/cu121
-#   pip install torch_geometric==2.5.3 pytorch-lightning torchmetrics
-#   pip install torch_scatter torch_cluster pyg-lib -f https://data.pyg.org/whl/torch-2.3.1+cu121.html
-torch==2.3.1+cu121
-torch_geometric==2.5.3
-torch_scatter
-torch_cluster
-pyg-lib==0.4.0+pt23cu121
-pytorch-lightning==2.6.5
-torchmetrics==1.9.0
+# PointNet segmentation. Pin <2.16: TF 2.16+ defaults to Keras 3, whose .h5 loader
+# can't deserialize this model's legacy TensorFlowOpLayer (raw TF ops embedded in
+# a functional-API graph, common in ~2020-2021-era PointNet Keras code) --
+# ValueError: Unknown layer: 'TensorFlowOpLayer'. TF <2.16 bundles Keras 2, which
+# still understands it.
+tensorflow==2.15.0
 
-# PointCNN_Training.ipynb also imports a module (pointcnn_seg_1024.py) that is
-# not present anywhere in this repo. In practice PointCNN_Training_Functions/model/
-# pointcnn_seg.py's PointCNNSeg class is architecturally identical (verified by
-# loading pointcnn-best_8_2048.ckpt with it -- state_dict matches exactly) and can
-# be used in its place for inference. It needed one fix for modern
-# pytorch_lightning: pytorch_lightning.utilities.types.EPOCH_OUTPUT was removed
-# and is only used there as a type hint.
+# Notebook cells must configure TensorFlow (CUDA_VISIBLE_DEVICES=-1, TF_XLA_FLAGS=
+# --tf_xla_auto_jit=0, tf.config.optimizer.set_jit(False)) *before* Open3D is
+# imported anywhere in the process. GPU inference fails on this machine (CUDA
+# toolkit component mismatch -> "libdevice not found", JIT compilation failed on
+# BatchNormalization's Rsqrt op) regardless of those flags if Open3D's CUDA-context
+# init has already happened -- CPU inference works reliably and is fast enough
+# (~35s for a 500k-point scan in 244 batches of 2048).
+
+# PointCNN is retired -- see old/ for the previous PointCNN pipeline and its
+# separate (much heavier) torch/torch_geometric/pyg-lib dependency stack.
